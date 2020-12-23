@@ -4,15 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        xmlns:local="clr-namespace:BatchWatermark"
+        xmlns:local="clr-namespace:BatchWatermark"        
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="MainWindow"
+        DataContext="{Binding MainWindow, Source={StaticResource ViewModelLocator}}">
     <Grid>
+        
         <DockPanel>
             <DockPanel DockPanel.Dock="Right" Margin="10">
                 <StackPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Orientation="Vertical">
-                    <Button Padding="10" Name="btnOpenWaterMarkFile" Click="btnOpenWaterMarkFile_Click">Select Watermark file</Button>
-                    <Image Name="imgWatermark" Width="150"/>
+                    <Button Padding="10" Name="btnOpenWaterMarkFile" Command="{Binding OpenWaterMarkFile}">Select Watermark file</Button>
+                    <Image Name="imgWatermark" Width="150" Source="{Binding WaterMarkUri}"/>
                 </StackPanel>
                 <Button Width="100" Height="25" DockPanel.Dock="Top" Name="btnApplyWaterMark" Click="btnApplyWaterMark_Click">Apply</Button>
             </DockPanel>
@@ -20,7 +22,7 @@
                 <StackPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Name="cbSelectAll" IsChecked="False" Content="Select All" Checked="CheckBox_Checked" Margin="10"/>
-                        <Button Name="btnOpenBatchFileList" Click="btnOpenBatchFileList_ClickAsync" Padding="10">Select Batch Folder</Button>
+                        <Button Name="btnOpenBatchFileList" Command="{Binding OpenBatchFileListAsync}" Padding="10">Select Batch Folder</Button>
                         <Button Name="btnRotateImage" Click="btnRotateImage_ClickAsync" Padding="10">Rotate</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="10">
@@ -28,7 +30,7 @@
                         <TextBox TextChanged="TextBox_TextChanged" Width="300" Height="25"/>
                     </StackPanel>
                 </StackPanel>
-                <ListView x:Name="lbBatchFileList" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListView x:Name="lbBatchFileList" ItemsSource="{Binding Photos}" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

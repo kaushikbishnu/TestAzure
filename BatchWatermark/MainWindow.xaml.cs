@@ -35,49 +35,7 @@ namespace BatchWatermark
         {
             InitializeComponent();
         }
-
-        private void btnOpenWaterMarkFile_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-            {
-                waterMarkUri = new Uri(openFileDialog.FileName);
-                waterMarkImage = System.Drawing.Image.FromFile(waterMarkUri.AbsolutePath);
-                imgWatermark.Source = new BitmapImage(waterMarkUri);
-            }
-        }
-
-        private async void btnOpenBatchFileList_ClickAsync(object sender, RoutedEventArgs e)
-        {
-            Photos.Clear();
-            batchUri = openFolderDialog();
-            if (String.IsNullOrEmpty(batchUri)) return;
-
-            var imagesFromFolder = Directory.GetFiles(batchUri, "*.jpg", SearchOption.AllDirectories).ToList();
-            //var listImages = new ObservableCollection<ImageWrapper>();
-            lbBatchFileList.ItemsSource = Photos;
-
-            foreach (var file in imagesFromFolder)
-            {
-                Photos.Add(new Photo { FileName = file });
-            }
-
-            await AsyncDataLoad();
-        }
-
-        public async Task AsyncDataLoad()
-        {
-            await Task.Run(() => AddItemsToList());
-        }
-
-        public void AddItemsToList()
-        {
-            foreach (var photo in Photos)
-            {
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => photo.Load()));
-            }
-        }
-
+        
         private string openFolderDialog()
         {
             var dialog = new CommonOpenFileDialog();
